@@ -1,0 +1,92 @@
+not, nil
+
+FUKNÈNÍ:
+
+WHILE------------------------------------------
+
+i = 0
+num = 5
+
+while i < num  do
+   i + 1
+end
+
+DEF--------------------------------------------
+
+def fce(a,c)
+    a=5
+end
+b=5
+c=6
+d = fce b,c
+
+DEF REKURZIVNI-----------
+
+def fce(a,c)
+b=5
+c=6
+   fce b,c
+end
+
+DEF NEREKURZIVNI---------
+
+def fce(a,c)
+b=5
+c=6
+   fce2 b,c
+end
+
+def fce2(a,c)
+end
+
+b=5
+c=6
+
+fce b,c
+
+IF---------------------------------------------
+
+l=5
+s=4
+
+if s < 5 then
+    l = 6
+else
+    l = 12
+end
+
+IF-----------------------
+
+s = 5
+
+if s < 5 then
+s = "sex"       
+else
+    if s > 5 then
+        s = 6 
+    else
+        s = 7 
+    end 
+end
+
+KOMENTARE--------------------------------------
+
+=begin 
+
+to neni zas takovej pruser
+
+fakt jsem mega v hajzlu 
+
+=end 
+
+KOMENRARE----------------
+
+=begin 
+
+to neni zas takovej pruser
+
+=end fakt jsem mega v hajzlu 
+
+-----------------------------------------------
+
+

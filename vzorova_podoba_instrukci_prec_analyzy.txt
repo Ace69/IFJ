@@ -1,0 +1,627 @@
+V�PO�ET V�RAZU      LF@%prec% - vysledek vyrazu
+
+POPS LF@%op1                                                           #------SCITANI-------
+POPS LF@%op2
+
+TYPE LF@%op1%type LF@%op1           #type vraci string@"typ"
+TYPE LF@%op2%type LF@%op2
+
+JUMPIFEQ %op1%int LF@%op1%type string@int
+JUMPIFEQ %op1%float LF@%op1%type string@float
+JUMPIFEQ %op1%string LF@%op1%type string@string
+JUMPIFEQ %op1%nil LF@%op1%type string@nil
+
+LABEL %op1%int              #pokud je prvni operand integer
+JUMPIFEQ %op1%int%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float LF@%op2%type string@float
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%int%op2%float  #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int
+PUSHS LF@%op1
+PUSHS LF@%op2
+ADDS
+JUMP %konec%scitani         
+
+
+LABEL %op1%float                    #prvni operand je float
+JUMPIFEQ %op1%float%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float LF@%op2%type string@float
+EXIT int@4                  #prvni operand byl string
+LABEL %op1%float%op2%int    #prvni operand je float, vysledek je float
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float
+PUSHS LF@%op1
+PUSHS LF@%op2
+ADDS
+JUMP %konec%scitani         
+
+
+LABEL %op1%string                    #prvni operand je string
+JUMPIFEQ %op1%string%op2%string LF@%op2%type string@string
+EXIT int@4                  #druhy operand byl int nebo float
+LABEL %op1%string%op2%string    #oba operandy string
+CONCAT LF@%prec% LF@%op1 LF@%op2
+PUSHS LF@%prec%
+JUMP %konec$scitani         
+
+LABEL %op1%nil
+EXIT int@4
+
+LABEL %konec%scitani
+
+POPS LF@%prec%
+
+
+
+POPS LF@%op2                                                        #------ODCITANI-------
+POPS LF@%op1                                                           
+TYPE LF@%op1%type LF@%op1           #type vraci string@"typ"
+TYPE LF@%op2%type LF@%op2
+JUMPIFEQ %op1%int LF@%op1%type string@int
+JUMPIFEQ %op1%float LF@%op1%type string@float
+JUMPIFEQ %op1%nil LF@%op1%type string@string
+JUMPIFEQ %op1%nil LF@%op1%type string@nil
+
+LABEL %op1%int              #pokud je prvni operand integer
+JUMPIFEQ %op1%int%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float LF@%op2%type string@float
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%int%op2%float  #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int
+PUSHS LF@%op1
+PUSHS LF@%op2
+SUBS
+JUMP %konec%odcitani         
+
+
+LABEL %op1%float                    #prvni operand je float
+JUMPIFEQ %op1%float%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float LF@%op2%type string@float
+EXIT int@4                  #prvni operand byl string
+LABEL %op1%float%op2%int    #prvni operand je float, vysledek je float
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float
+PUSHS LF@%op1
+PUSHS LF@%op2
+SUBS
+JUMP %konec%odcitani                
+
+LABEL %op1%nil
+EXIT int@4
+
+LABEL %konec%odcitani
+
+POPS LF@%prec% 
+
+
+
+
+POPS LF@%op1                                                           #------NASOBENI-------
+POPS LF@%op2
+TYPE LF@%op1%type LF@%op1           #type vraci string@"typ"
+TYPE LF@%op2%type LF@%op2
+JUMPIFEQ %op1%int LF@%op1%type string@int
+JUMPIFEQ %op1%float LF@%op1%type string@float
+JUMPIFEQ %op1%nil LF@%op1%type string@string
+JUMPIFEQ %op1%nil LF@%op1%type string@nil
+
+LABEL %op1%int              #pokud je prvni operand integer
+JUMPIFEQ %op1%int%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float LF@%op2%type string@float
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%int%op2%float  #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int
+PUSHS LF@%op1
+PUSHS LF@%op2
+MULS
+JUMP %konec%nasobeni            
+
+
+LABEL %op1%float                    #prvni operand je float
+JUMPIFEQ %op1%float%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float LF@%op2%type string@float
+EXIT int@4                  #prvni operand byl string
+LABEL %op1%float%op2%int    #prvni operand je float, vysledek je float
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float
+PUSHS LF@%op1
+PUSHS LF@%op2
+MULS
+JUMP %konec%nasobeni               
+
+LABEL %op1%nil
+EXIT int@4
+
+LABEL %konec%nasobeni   
+
+POPS LF@%prec%     
+
+
+
+
+POPS LF@%op2                                                        #------DELENI-------
+POPS LF@%op1                                                           
+
+TYPE LF@%op1%type LF@%op1           #type vraci string@"typ"
+TYPE LF@%op2%type LF@%op2
+
+JUMPIFEQ %op1%int LF@%op1%type string@int
+JUMPIFEQ %op1%float LF@%op1%type string@float
+JUMPIFEQ %op1%nil LF@%op1%type string@string
+JUMPIFEQ %op1%nil LF@%op1%type string@nil
+
+LABEL %op1%int              #pokud je prvni operand integer
+JUMPIFEQ %op1%int%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float LF@%op2%type string@float         //
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%int%op2%int
+JUMPIFEQ %deleni%0 LF@%op2 int@0
+PUSHS LF@%op1
+PUSHS LF@%op2
+IDIVS
+JUMP %konec%deleni      
+
+
+LABEL %op1%float                    #prvni operand je float
+JUMPIFEQ %op1%float%op2%int2 LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float LF@%op2%type string@float
+EXIT int@4                  #prvni operand byl string
+LABEL %op1%float%op2%int2    #prvni operand je float, vysledek je float
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float
+JUMPIFEQ %deleni%0 LF@%op2 float@0x0.0p+0
+PUSHS LF@%op1
+PUSHS LF@%op2
+DIVS
+JUMP %konec%deleni               
+
+LABEL %op1%nil
+EXIT int@4
+
+LABEL %deleni%0
+EXIT int@9
+
+LABEL %konec%deleni   
+
+POPS LF@%prec%
+
+
+
+
+POPS LF@%op2                                                        #------MENSI_NEZ-------
+POPS LF@%op1                                                           
+
+TYPE LF@%op1%type LF@%op1           #type vraci string@"typ"
+TYPE LF@%op2%type LF@%op2
+
+JUMPIFEQ %op1%int LF@%op1%type string@int
+JUMPIFEQ %op1%float LF@%op1%type string@float
+JUMPIFEQ %op1%string LF@%op1%type string@string
+JUMPIFEQ %op1%nil LF@%op1%type string@nil
+
+LABEL %op1%int              #pokud je prvni operand integer
+JUMPIFEQ %op1%int%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float LF@%op2%type string@float
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%int%op2%float  #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int
+PUSHS LF@%op1
+PUSHS LF@%op2
+LTS
+JUMP %konec%mensi
+
+
+LABEL %op1%float                    #prvni operand je float
+JUMPIFEQ %op1%float%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float LF@%op2%type string@float
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%float%op2%int    #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float
+PUSHS LF@%op1
+PUSHS LF@%op2
+break
+LTS
+JUMP %konec%mensi            
+
+
+LABEL %op1%string              #pokud je prvni operand integer
+JUMPIFEQ %op1%string%op2%string LF@%op2%type string@string
+EXIT int@4                  #druhy operand nebyl string
+LABEL %op1%string%op2%string
+PUSHS LF@%op1
+PUSHS LF@%op2
+LTS
+JUMP %konec%mensi  
+
+LABEL %op1%nil
+EXIT int@4
+
+LABEL %konec%mensi
+
+POPS LF@%prec%   
+
+
+
+
+POPS LF@%op2                                                        #------VETSI_NEZ-------
+POPS LF@%op1                                                           
+
+TYPE LF@%op1%type LF@%op1           #type vraci string@"typ"
+TYPE LF@%op2%type LF@%op2
+
+JUMPIFEQ %op1%int LF@%op1%type string@int
+JUMPIFEQ %op1%float LF@%op1%type string@float
+JUMPIFEQ %op1%string LF@%op1%type string@string
+JUMPIFEQ %op1%nil LF@%op1%type string@nil
+
+LABEL %op1%int              #pokud je prvni operand integer
+JUMPIFEQ %op1%int%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float LF@%op2%type string@float
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%int%op2%float  #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int
+PUSHS LF@%op1
+PUSHS LF@%op2
+GTS
+JUMP %konec%vetsi
+
+
+LABEL %op1%float                    #prvni operand je float
+JUMPIFEQ %op1%float%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float LF@%op2%type string@float
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%float%op2%int    #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float
+PUSHS LF@%op1
+PUSHS LF@%op2
+break
+GTS
+JUMP %konec%vetsi   
+
+
+
+LABEL %op1%string              #pokud je prvni operand integer
+JUMPIFEQ %op1%string%op2%string LF@%op2%type string@string
+EXIT int@4                  #druhy operand nebyl string
+LABEL %op1%string%op2%string
+PUSHS LF@%op1
+PUSHS LF@%op2
+GTS
+JUMP %konec%vetsi  
+
+LABEL %op1%nil
+EXIT int@4
+
+LABEL %konec%vetsi
+
+POPS LF@%prec%          
+
+
+
+
+
+
+
+POPS LF@%op2                                                        #------MENSI_ROVNO-------
+POPS LF@%op1                                                           
+
+TYPE LF@%op1%type LF@%op1           #type vraci string@"typ"
+TYPE LF@%op2%type LF@%op2
+
+JUMPIFEQ %op1%int LF@%op1%type string@int
+JUMPIFEQ %op1%float LF@%op1%type string@float
+JUMPIFEQ %op1%string LF@%op1%type string@string
+JUMPIFEQ %op1%nil LF@%op1%type string@nil
+
+LABEL %op1%int              #pokud je prvni operand integer
+JUMPIFEQ %op1%int%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float LF@%op2%type string@float
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%int%op2%float  #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+JUMPIFEQ %konec%mensi%rovno LF@%prec% bool@true
+PUSHS LF@%op1
+PUSHS LF@%op2
+LTS
+POPS LF@%prec%
+JUMP %konec%mensi%rovno
+
+
+LABEL %op1%float                    #prvni operand je float
+JUMPIFEQ %op1%float%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float LF@%op2%type string@float
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%float%op2%int    #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+JUMPIFEQ %konec%mensi%rovno LF@%prec% bool@true
+PUSHS LF@%op1
+PUSHS LF@%op2
+LTS
+POPS LF@%prec%
+JUMP %konec%mensi%rovno   
+
+
+
+LABEL %op1%string                    #prvni operand je string
+JUMPIFEQ %op1%string%op2%string LF@%op2%type string@string
+EXIT int@4                  #druhy operand nebyl string
+LABEL %op1%string%op2%string
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+JUMPIFEQ %konec%mensi%rovno LF@%prec% bool@true
+PUSHS LF@%op1
+PUSHS LF@%op2
+LTS
+POPS LF@%prec%
+JUMP %konec%mensi%rovno   
+
+
+LABEL %op1%nil
+EXIT int@4
+
+LABEL %konec%mensi%rovno
+PUSHS 
+
+
+
+
+POPS LF@%op2                                                        #------VETSI_ROVNO-------
+POPS LF@%op1                                                           
+
+TYPE LF@%op1%type LF@%op1           #type vraci string@"typ"
+TYPE LF@%op2%type LF@%op2
+
+JUMPIFEQ %op1%int LF@%op1%type string@int
+JUMPIFEQ %op1%float LF@%op1%type string@float
+JUMPIFEQ %op1%string LF@%op1%type string@string
+JUMPIFEQ %op1%nil LF@%op1%type string@nil
+
+LABEL %op1%int              #pokud je prvni operand integer
+JUMPIFEQ %op1%int%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float LF@%op2%type string@float
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%int%op2%float  #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+JUMPIFEQ %konec%vetsi%rovno LF@%prec% bool@true
+PUSHS LF@%op1
+PUSHS LF@%op2
+GTS
+POPS LF@%prec%
+DPRINT LF@%prec%
+JUMP %konec%vetsi%rovno
+
+
+LABEL %op1%float                    #prvni operand je float
+JUMPIFEQ %op1%float%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float LF@%op2%type string@float
+EXIT int@4                  #druhy operand byl string
+LABEL %op1%float%op2%int    #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+JUMPIFEQ %konec%vetsi%rovno LF@%prec% bool@true
+PUSHS LF@%op1
+PUSHS LF@%op2
+GTS
+POPS LF@%prec%
+JUMP %konec%vetsi%rovno   
+
+LABEL %op1%string                    #prvni operand je string
+JUMPIFEQ %op1%string%op2%string LF@%op2%type string@string
+EXIT int@4                  #druhy operand nebyl string
+LABEL %op1%string%op2%string
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+JUMPIFEQ %konec%vetsi%rovno  LF@%prec% bool@true
+PUSHS LF@%op1
+PUSHS LF@%op2
+GTS
+POPS LF@%prec%
+JUMP %konec%vetsi%rovno  
+
+LABEL %op1%nil
+EXIT int@4
+
+LABEL %konec%vetsi%rovno
+
+
+
+
+POPS LF@%op2                                                        #------ROVNO-------
+POPS LF@%op1                                                           
+
+TYPE LF@%op1%type LF@%op1           #type vraci string@"typ"
+TYPE LF@%op2%type LF@%op2
+
+JUMPIFEQ %op1%int LF@%op1%type string@int
+JUMPIFEQ %op1%float LF@%op1%type string@float
+JUMPIFEQ %op1%string LF@%op1%type string@string
+JUMPIFEQ %op1%nil LF@%op1%type string@nil
+
+LABEL %op1%int              #pokud je prvni operand integer
+JUMPIFEQ %op1%int%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float LF@%op2%type string@float
+MOVE LF@%prec% bool@false                  #druhy operand byl string nebo nil -> false
+JUMP %konec%rovno
+LABEL %op1%int%op2%float  #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+JUMP %konec%rovno
+
+
+LABEL %op1%float                    #prvni operand je float
+JUMPIFEQ %op1%float%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float LF@%op2%type string@float
+MOVE LF@%prec% bool@false                  #druhy operand byl string nebo nil -> false
+JUMP %konec%rovno
+LABEL %op1%float%op2%int    #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+JUMP %konec%rovno   
+
+LABEL %op1%string                    #prvni operand je string
+JUMPIFEQ %op1%string%op2%string LF@%op2%type string@string
+MOVE LF@%prec% bool@false                  #druhy operand nebyl string -> false
+JUMP %konec%rovno                           
+LABEL %op1%string%op2%string
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+JUMP %konec%rovno  
+
+LABEL %op1%nil                   #prvni operand je nil
+JUMPIFEQ %op1%nil%op2%nil LF@%op2%type string@nil
+MOVE LF@%prec% bool@false                  #druhy operand nebyl string -> false
+JUMP %konec%rovno                           
+LABEL %op1%nil%op2%nil
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+JUMP %konec%rovno  
+
+LABEL %konec%rovno
+
+
+
+
+POPS LF@%op2                                                        #------NEROVNO-------
+POPS LF@%op1                                                           
+
+TYPE LF@%op1%type LF@%op1           #type vraci string@"typ"
+TYPE LF@%op2%type LF@%op2
+
+JUMPIFEQ %op1%int LF@%op1%type string@int
+JUMPIFEQ %op1%float LF@%op1%type string@float
+JUMPIFEQ %op1%string LF@%op1%type string@string
+JUMPIFEQ %op1%nil LF@%op1%type string@nil
+
+LABEL %op1%int              #pokud je prvni operand integer
+JUMPIFEQ %op1%int%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float LF@%op2%type string@float
+MOVE LF@%prec% bool@true                  #druhy operand byl string nebo nil -> false
+JUMP %konec%nerovno
+LABEL %op1%int%op2%float  #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+NOT LF@%prec% LF@%prec%
+JUMP %konec%nerovno
+
+
+LABEL %op1%float                    #prvni operand je float
+JUMPIFEQ %op1%float%op2%int LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float LF@%op2%type string@float
+MOVE LF@%prec% bool@true                  #druhy operand byl string nebo nil -> false
+JUMP %konec%nerovno
+LABEL %op1%float%op2%int    #druhy operand je float, vysledek je float
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+NOT LF@%prec% LF@%prec%
+JUMP %konec%nerovno   
+
+LABEL %op1%string                    #prvni operand je string
+JUMPIFEQ %op1%string%op2%string LF@%op2%type string@string
+MOVE LF@%prec% bool@true                  #druhy operand nebyl string -> false
+JUMP %konec%nerovno                           
+LABEL %op1%string%op2%string
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+NOT LF@%prec% LF@%prec%
+JUMP %konec%nerovno  
+
+LABEL %op1%nil                   #prvni operand je nil
+JUMPIFEQ %op1%nil%op2%nil LF@%op2%type string@nil
+MOVE LF@%prec% bool@true                  #druhy operand nebyl string -> false
+JUMP %konec%nerovno                           
+LABEL %op1%nil%op2%nil
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+POPS LF@%prec%
+NOT LF@%prec% LF@%prec%
+JUMP %konec%nerovno  
+
+LABEL %konec%nerovno
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+INTEGER
+if(finalStackPtr->topPtr->type = INTEGER){
+    GENERATE_INTEGER(finalStackPtr->topPtr->integer_value);
+}
+
+FLOAT
+if(finalStackPtr->topPtr->type = FLOAT){
+    GENERATE_INTEGER(finalStackPtr->topPtr->float_value);
+}
+
+STRING
+if(finalStackPtr->topPtr->type = STRING){
+    GENERATE_INTEGER(finalStackPtr->topPtr->string_value);
+}
+
+printf("POPS LF@%s", nazev_promenne);

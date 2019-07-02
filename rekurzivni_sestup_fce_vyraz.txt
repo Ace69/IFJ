@@ -1,0 +1,17 @@
+Možnosti rozpoznání že se jedná o funkci v pøípadì a = ...
+
+
+Democviko 16:00 - https://youtu.be/v3Ec5oxC-rM?t=960
+
+V tomto pøípadì gramatika není LL(1), bude potøeba více tokenù dopøedu a rozhodování podle urèitých dalších ukazatelù (tabulka symbolù atd.)
+
+Funkce rekurzivního sestupu bude obsahovat AD HOC mechanizmus která rozhodne jestli se jedná o pøíkaz volání funkce nebo o pøíkaz pøiøazení
+
+
+Možnosti rozpoznání že se jedná o funkci:
+1) Podívání se do tabulky symbolù pokud již byla funkce definována
+2) Funkce ještì nebyla definována, podívám se o token dál jestli tam nejsou kulaté závorky (také jasná identifikace toho že se bude jednat o funkci)
+3) Funkce ještì nebyla definována, závorky tam nejsou.. za identifikátorem je ve výrazu vyžadován operátor    a = fce 2   tedy opìt jasná funkce
+
+
+Naopak v pøípadì    a = a -1      ihned víme že se jedná o výraz, funkce nemùže mít stejný název jako promìnná

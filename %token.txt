@@ -1,0 +1,46 @@
+http://jsmachines.sourceforge.net/machines/ll1.html
+
+PROG -> SEC END_ROW PROG
+PROG -> eol PROG
+PROG -> ''
+PROG -> eof
+PROG -> bcomment PROG
+
+END_ROW  -> eol
+END_ROW  -> eof
+
+SEC -> identifier eq FCE_EXPR
+SEC -> while EXPR do eol PROG end
+SEC -> if EXPR then eol PROG else eol PROG end
+SEC -> def identifier lbracket PARAMS rbracket eol PROG end
+
+PARAMS -> ''
+PARAMS -> identifier PARAM_LIST
+
+PARAM_LIST -> ''
+PARAM_LIST -> comma identifier PARAM_LIST
+
+CALL_PARAMS -> ''
+CALL_PARAMS -> ITEM CALL_PARAM_LIST 
+
+CALL_PARAM_LIST -> ''
+CALL_PARAM_LIST -> comma ITEM CALL_PARAM_LIST 
+
+FCE_EXPR -> EXPR
+FCE_EXPR -> FCE
+
+BR_OR_NOT -> lbracket CALL_PARAMS rbracket 
+BR_OR_NOT -> CALL_PARAMS 
+
+FCE -> identifier BR_OR_NOT
+
+ITEM -> integer
+ITEM -> float
+ITEM -> string
+ITEM -> nil
+ITEM -> identifier
+
+EXPR -> ''
+
+
+while do eol end eol if then eol else eol end eol print string eol def identifier lbracket identifier comma identifier rbracket eol end eol eol eof
