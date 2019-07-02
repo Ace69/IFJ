@@ -1,0 +1,222 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[export]{adjustbox}
+
+\mode<presentation> {}
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline}
+\setbeamertemplate{page number} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{page number} % To replace the footer line in all slides with a simple slide count uncomment this line
+%\setbeamertemplate{navigation symbols} % To remove the navigation symbols from the bottom of all slides uncomment this line
+
+\beamertemplatenavigationsymbolsempty
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{Prezentace k projektu IFJ a IAL} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author[]{David Bulawa \texttt{xbulaw01} \\
+	   Jakub Dolejší \texttt{xdolej09} \\
+       František Policar \texttt{xpolic04} \\
+       Tomáš Svěrák \texttt{xsvera04}}
+       
+%\institute % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Obsah} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+%\section{Úvod} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%------------------------------------------------
+%
+%\begin{frame}
+%\frametitle{Úvod}
+%\begin{itemize}
+%\item Efetkvní práce
+%\begin{itemize}
+%\item Pravidelné schůzky
+%\item Rozdělení úkolů  
+%\end{itemize}
+%\item Tvorba překladače
+%\begin{itemize}
+%\item Tvorba jednotlivých částí projektu 
+%\item Konzultace a řešení problémů
+%\end{itemize}
+%\item Dokončování a testování 
+%\end{itemize}
+%\end{frame}
+
+%------------------------------------------------
+\section{Úvod} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%------------------------------------------------
+
+%1-----------------------------------------------
+
+\begin{frame}
+\frametitle{Lexikální analyzátor}
+    \begin{figure}[!p]
+			\includegraphics[scale=0.078,center]{1.jpg}
+			\end{figure}
+		\begin{itemize}
+        	\item Implementován pomocí DKA
+        	\item Načítá zdrojový kód, který rozděluje na tokeny
+        	\item[]
+        	\item[]
+    	\end{itemize} 		    	    
+\end{frame}
+
+%2-----------------------------------------------
+
+\begin{frame}
+\frametitle{Syntaktický analyzátor}
+    \begin{figure}[!p]
+			\includegraphics[scale=0.078,center]{2.jpg}
+			\end{figure}
+		\begin{itemize}
+        	\item Implementován za pomocí dvouprůchodového 				rekurzivního sestupu
+        	\item Zapisuje a čte z tabulky symbolů
+        	\item V případě načtení výrazů předá řízení PSA
+        	\item Generguje výsledný kód
+    	\end{itemize}   		    	    
+\end{frame}
+
+%3-----------------------------------------------
+
+\begin{frame}
+\frametitle{Precedenční syntaktický analyzátor}
+    \begin{figure}[!p]
+			\includegraphics[scale=0.078,center]{3.jpg}
+			\end{figure}
+		\begin{itemize}
+        	\item Zpracovává výrazy
+        	\item Převádí výraz z infixu na postfix
+        	\item Generguje výsledný kód
+        	\item[]
+    	\end{itemize}   		    	    
+\end{frame}
+
+%4-----------------------------------------------
+
+\begin{frame}
+\frametitle{Tabulka symbolů}
+    \begin{figure}[!p]
+			\includegraphics[scale=0.078,center]{4.jpg}
+			\end{figure}
+		\begin{itemize}
+        	\item Implementace pomocí binárního vyhledávacího stromu
+        	\item Stará se o kontrolu definic proměnných a funkcí 
+        	\item[]
+        	\item[]
+    	\end{itemize}   		    	    
+\end{frame}
+
+%------------------------------------------------
+\section{Co nám projekt dal?} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Co nám projekt dal?} 
+\begin{itemize}
+\item Zdokonalení programování v jazyce C
+\item Pochopení vnitřní funkcionality překladačů
+\item Seznámení s verzovacím systémem Subversion 
+\item Zlepšení komunikace v týmu
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\Huge{\centerline{Děkujeme za pozornost}}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
