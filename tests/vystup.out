@@ -1,0 +1,347 @@
+.IFJcode18
+CREATEFRAME
+PUSHFRAME
+DEFVAR LF@%op1
+DEFVAR LF@%op2
+DEFVAR LF@%op1%type
+DEFVAR LF@%op2%type
+DEFVAR LF@%prec%
+JUMP $%END%inputi
+LABEL $inputi
+PUSHFRAME
+DEFVAR LF@%return%
+READ LF@%return% int
+POPFRAME
+RETURN
+LABEL $%END%inputi
+JUMP $%END%inputf
+LABEL $inputf
+PUSHFRAME
+DEFVAR LF@%return%
+READ LF@%return% float
+POPFRAME
+RETURN
+LABEL $%END%inputf
+JUMP $%END%inputs
+LABEL $inputs
+PUSHFRAME
+DEFVAR LF@%return%
+READ LF@%return% string
+POPFRAME
+RETURN
+LABEL $%END%inputs
+JUMP $%END%ord
+LABEL $ord
+PUSHFRAME
+DEFVAR LF@%return%
+MOVE LF@%return% nil@nil
+DEFVAR LF@s
+MOVE LF@s LF@%1
+DEFVAR LF@i
+MOVE LF@i LF@%2
+DEFVAR LF@cond
+DEFVAR LF@delka
+STRLEN LF@delka LF@s
+LT LF@cond LF@i LF@delka
+NOT LF@cond LF@cond
+JUMPIFEQ $ord1 LF@cond bool@true
+DEFVAR LF@hodnota
+STRI2INT LF@hodnota LF@s LF@i
+MOVE LF@%return% LF@hodnota
+JUMP $ord2
+LABEL $ord1
+LABEL $ord2
+POPFRAME
+RETURN
+LABEL $%END%ord
+JUMP $%END%chr
+LABEL $chr
+PUSHFRAME
+DEFVAR LF@%return%
+MOVE LF@%return% nil@nil
+DEFVAR LF@i
+MOVE LF@i LF@%1
+DEFVAR LF@vetsi
+GT LF@vetsi LF@i int@-1
+DEFVAR LF@mensi
+LT LF@mensi LF@i int@256
+DEFVAR LF@cond
+AND LF@cond LF@vetsi LF@mensi
+NOT LF@cond LF@cond
+JUMPIFEQ $chr1 LF@cond bool@true
+INT2CHAR LF@%return% LF@i
+JUMP $chr2
+LABEL $chr1
+EXIT int@4
+LABEL $chr2
+POPFRAME
+RETURN
+LABEL $%END%chr
+JUMP $%END%length
+LABEL $length
+PUSHFRAME
+DEFVAR LF@%return%
+DEFVAR LF@%s%
+DEFVAR LF@%var%
+MOVE LF@%s% LF@%1
+STRLEN LF@%var% LF@%s%
+MOVE LF@%return% LF@%var%
+POPFRAME
+RETURN
+LABEL $%END%length
+JUMP $%END%abc
+LABEL $abc
+PUSHFRAME
+DEFVAR LF@%op1
+DEFVAR LF@%op2
+DEFVAR LF@%op1%type
+DEFVAR LF@%op2%type
+DEFVAR LF@%prec%
+DEFVAR LF@%return%
+MOVE LF@%return% nil@nil
+DEFVAR LF@a
+MOVE LF@a LF@%1
+PUSHS LF@a
+PUSHS int@10
+POPS LF@%op2
+POPS LF@%op1
+TYPE LF@%op1%type LF@%op1 
+TYPE LF@%op2%type LF@%op2
+JUMPIFEQ %op1%int0 LF@%op1%type string@int
+JUMPIFEQ %op1%float0 LF@%op1%type string@float
+JUMPIFEQ %op1%string0 LF@%op1%type string@string
+JUMPIFEQ %op1%nil0 LF@%op1%type string@nil
+LABEL %op1%int0
+JUMPIFEQ %op1%int%op2%int0 LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float0 LF@%op2%type string@float
+MOVE LF@%prec% bool@false
+PUSHS LF@%prec%
+JUMP %konec%rovno0
+LABEL %op1%int%op2%float0
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int0
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+JUMP %konec%rovno0
+LABEL %op1%float0
+JUMPIFEQ %op1%float%op2%int0 LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float0 LF@%op2%type string@float
+MOVE LF@%prec% bool@false
+PUSHS LF@%prec%
+JUMP %konec%rovno0
+LABEL %op1%float%op2%int0
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float0
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+JUMP %konec%rovno0
+LABEL %op1%string0
+JUMPIFEQ %op1%string%op2%string0 LF@%op2%type string@string
+MOVE LF@%prec% bool@false
+PUSHS LF@%prec%
+JUMP %konec%rovno0
+LABEL %op1%string%op2%string0
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+JUMP %konec%rovno0
+LABEL %op1%nil0
+JUMPIFEQ %op1%nil%op2%nil0 LF@%op2%type string@nil
+MOVE LF@%prec% bool@false
+PUSHS LF@%prec%
+JUMP %konec%rovno0
+LABEL %op1%nil%op2%nil0
+PUSHS LF@%op1
+PUSHS LF@%op2
+EQS
+LABEL %konec%rovno0
+POPS LF@%prec%
+TYPE LF@%op1%type LF@%prec%
+JUMPIFEQ $isbool1 LF@%op1%type string@bool
+EQ LF@%prec% LF@%op1%type string@nil
+NOT LF@%prec% LF@%prec%
+LABEL $isbool1
+JUMPIFEQ $ifjump2 LF@%prec% bool@true
+CREATEFRAME
+DEFVAR TF@%1
+MOVE TF@%1 int@150
+JUMP $%END%$print3
+LABEL $print3
+PUSHFRAME
+DEFVAR LF@%return%
+MOVE LF@%return% nil@nil
+DEFVAR LF@param1
+MOVE LF@param1 LF@%1
+WRITE LF@param1
+MOVE LF@%return% nil@nil
+POPFRAME
+RETURN
+LABEL $%END%$print3
+CALL $print3
+JUMP $ifjump4
+LABEL $ifjump2
+CREATEFRAME
+DEFVAR TF@%1
+MOVE TF@%1 int@160
+JUMP $%END%$print5
+LABEL $print5
+PUSHFRAME
+DEFVAR LF@%return%
+MOVE LF@%return% nil@nil
+DEFVAR LF@param1
+MOVE LF@param1 LF@%1
+WRITE LF@param1
+MOVE LF@%return% nil@nil
+POPFRAME
+RETURN
+LABEL $%END%$print5
+CALL $print5
+LABEL $ifjump4
+MOVE LF@%return% TF@%return%
+POPFRAME
+RETURN
+LABEL $%END%abc
+DEFVAR LF@a
+MOVE LF@a nil@nil
+PUSHS int@1
+POPS LF@%prec%
+MOVE LF@a LF@%prec%
+LABEL $cyklus6
+PUSHS LF@a
+PUSHS int@10
+POPS LF@%op2
+POPS LF@%op1
+TYPE LF@%op1%type LF@%op1
+TYPE LF@%op2%type LF@%op2
+JUMPIFEQ %op1%int7 LF@%op1%type string@int
+JUMPIFEQ %op1%float7 LF@%op1%type string@float
+JUMPIFEQ %op1%string7 LF@%op1%type string@string
+JUMPIFEQ %op1%nil7 LF@%op1%type string@nil
+LABEL %op1%int7
+JUMPIFEQ %op1%int%op2%int7 LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float7 LF@%op2%type string@float
+EXIT int@4
+LABEL %op1%int%op2%float7
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int7
+PUSHS LF@%op1
+PUSHS LF@%op2
+LTS
+JUMP %konec%mensi7
+LABEL %op1%float7
+JUMPIFEQ %op1%float%op2%int7 LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float7 LF@%op2%type string@float
+EXIT int@4
+LABEL %op1%float%op2%int7
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float7
+PUSHS LF@%op1
+PUSHS LF@%op2
+LTS
+JUMP %konec%mensi7
+LABEL %op1%string7
+JUMPIFEQ %op1%string%op2%string7 LF@%op2%type string@string
+EXIT int@4
+LABEL %op1%string%op2%string7
+PUSHS LF@%op1
+PUSHS LF@%op2
+LTS
+JUMP %konec%mensi7
+LABEL %op1%nil7
+EXIT int@4
+LABEL %konec%mensi7
+POPS LF@%prec%
+TYPE LF@%op1%type LF@%prec%
+JUMPIFEQ $isbool8 LF@%op1%type string@bool
+EQ LF@%prec% LF@%op1%type string@nil
+NOT LF@%prec% LF@%prec%
+LABEL $isbool8
+NOT LF@%prec% LF@%prec%
+JUMPIFEQ $cyklusEnd9 LF@%prec% bool@true
+PUSHS LF@a
+PUSHS int@1
+POPS LF@%op1
+POPS LF@%op2
+TYPE LF@%op1%type LF@%op1
+TYPE LF@%op2%type LF@%op2
+JUMPIFEQ %op1%int10 LF@%op1%type string@int
+JUMPIFEQ %op1%float10 LF@%op1%type string@float
+JUMPIFEQ %op1%string10 LF@%op1%type string@string
+JUMPIFEQ %op1%nil10 LF@%op1%type string@nil
+LABEL %op1%int10
+JUMPIFEQ %op1%int%op2%int10 LF@%op2%type string@int
+JUMPIFEQ %op1%int%op2%float10 LF@%op2%type string@float
+EXIT int@4
+LABEL %op1%int%op2%float10
+INT2FLOAT LF@%op1 LF@%op1
+LABEL %op1%int%op2%int10
+PUSHS LF@%op1
+PUSHS LF@%op2
+ADDS
+JUMP %konec%scitani10
+LABEL %op1%float10
+JUMPIFEQ %op1%float%op2%int10 LF@%op2%type string@int
+JUMPIFEQ %op1%float%op2%float10 LF@%op2%type string@float
+EXIT int@4
+LABEL %op1%float%op2%int10
+INT2FLOAT LF@%op2 LF@%op2
+LABEL %op1%float%op2%float10
+PUSHS LF@%op1
+PUSHS LF@%op2
+ADDS
+JUMP %konec%scitani10
+LABEL %op1%string10
+JUMPIFEQ %op1%string%op2%string10 LF@%op2%type string@string
+EXIT int@4
+LABEL %op1%string%op2%string10
+CONCAT LF@%prec% LF@%op1 LF@%op2
+PUSHS LF@%prec%
+JUMP %konec%scitani10
+LABEL %op1%nil10
+EXIT int@4
+LABEL %konec%scitani10
+POPS LF@%prec%
+MOVE LF@a LF@%prec%
+JUMP $cyklus6
+LABEL $cyklusEnd9
+DEFVAR LF@b
+MOVE LF@b nil@nil
+CREATEFRAME
+DEFVAR TF@%1
+MOVE TF@%1 LF@a
+CALL $abc
+MOVE LF@b TF@%return%
+CREATEFRAME
+DEFVAR TF@%1
+MOVE TF@%1 LF@a
+JUMP $%END%$print11
+LABEL $print11
+PUSHFRAME
+DEFVAR LF@%return%
+MOVE LF@%return% nil@nil
+DEFVAR LF@param1
+MOVE LF@param1 LF@%1
+WRITE LF@param1
+MOVE LF@%return% nil@nil
+POPFRAME
+RETURN
+LABEL $%END%$print11
+CALL $print11
+CREATEFRAME
+DEFVAR TF@%1
+MOVE TF@%1 LF@b
+JUMP $%END%$print12
+LABEL $print12
+PUSHFRAME
+DEFVAR LF@%return%
+MOVE LF@%return% nil@nil
+DEFVAR LF@param1
+MOVE LF@param1 LF@%1
+WRITE LF@param1
+MOVE LF@%return% nil@nil
+POPFRAME
+RETURN
+LABEL $%END%$print12
+CALL $print12

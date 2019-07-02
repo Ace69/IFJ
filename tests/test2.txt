@@ -1,0 +1,12 @@
+def abc(a)
+    if a==10 then
+        print 150
+    else
+        print 160
+    end
+end
+a = 1
+while a < 9 do
+    a=a+1
+end
+b = abc a
